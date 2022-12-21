@@ -1,7 +1,7 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Copyright from '../components/Copyright.astro';
+import Base from './Base.astro';
+import AstroTemplateOutlet from "astro-template-outlet"
 
 export interface Props {
 	content: {
@@ -18,38 +18,36 @@ const {
 } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			.title {
-				font-size: 2em;
-				margin: 0.25em 0 0;
-			}
-			hr {
-				border-top: 1px solid #ddd;
-				margin: 1rem 0;
-			}
-		</style>
-	</head>
+<Base {...{title, description}}>
+	<header class="mx-auto container md:w-3/5">
+		<div class="grid place-items-center">
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				{heroImage && <img width={720} height={360} src={heroImage} alt="" />}
-				<h1 class="title">{title}</h1>
+				{heroImage && <img width={720} height={360}  src={heroImage} alt="" />}
+				
+				<h1>{title}</h1>
+				
 				{pubDate && <time>{pubDate}</time>}
-				{updatedDate ? (
-						<div>
-							Last updated on <time>{updatedDate}</time>
-						</div>
-					): null
-				}
-				<hr />
-				<slot />
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+				
+				{updatedDate ? <AstroTemplateOutlet templateId="updated-time"  /> : null}
+				
+			</div>	
+	</header>
+	<article class=" mx-auto container md:w-4/5 ">		
+		<div class="grid lg:place-items-center gap-2">
+			<slot />
+		</div>
+	</article>
+	<Copyright />
+</Base>
+
+<style lang="postcss">
+	 :global(body)  {
+		@apply py-2 px-6 md:py-12 md:px-36;
+	}
+</style>
+
+<template id="updated-time">
+	<div>
+		Last updated on <time>{updatedDate}</time>
+	</div>		
+</template>

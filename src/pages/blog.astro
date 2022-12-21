@@ -1,6 +1,5 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Copyright from '~/components/Copyright.astro';
 import { getCollection } from 'astro:content';
 import HMF from '~/layouts/HMF.astro';
 
@@ -8,12 +7,12 @@ import HMF from '~/layouts/HMF.astro';
 const posts = (await getCollection("blog", (entry)=> entry.data.draft !== true )).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const {SITE_TITLE, SITE_DESCRIPTION} = import.meta.env
 ---
 
-<HMF title={import.meta.env.SITE_TITLE} 
-description={import.meta.env.SITE_DESCRIPTION}>
-	<Header />
-		<main>
+<HMF title={SITE_TITLE} 
+description={SITE_DESCRIPTION}>
 			<section>
 				<ul>
 					{
@@ -32,9 +31,7 @@ description={import.meta.env.SITE_DESCRIPTION}>
 					}
 				</ul>
 			</section>
-		</main>
-		<Footer />
-	
+		<Copyright slot="footer" />
 </HMF>
 
 

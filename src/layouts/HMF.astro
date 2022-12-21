@@ -5,7 +5,7 @@ import Base from "./Base.astro";
 
 type Props = LayoutProps;
 
-const { slots } = Astro;
+const { slots, url } = Astro;
 
 const header = slots.has("header")
   ? `${await slots.render("header")} `
@@ -20,7 +20,7 @@ const { title, description } = Astro.props;
 
 <Base {...{title, description}}>
   <header>
-    <Nav client:load />
+    <Nav url={url} client:load />
     <Fragment set:html={header} />
   </header>
   <main>

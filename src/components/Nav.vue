@@ -1,15 +1,19 @@
 <script lang="tsx" setup>
 import { useDark, useToggle } from "@vueuse/core";
+import type { AstroGlobal } from "astro";
+import HeaderLink from "~/components/HeaderLink.vue";
 const isDark = useDark();
 
 const toggleSunIcon = useToggle(isDark);
 
-const links = ["home", "about", "projects"];
+const links = ["home", "about", "blog"];
 
 const linkTextAndHrefMap = links.map((link) => ({
   href: link !== "home" ? `/${link}` : "/",
   text: link,
 }));
+
+defineProps<{ url: AstroGlobal["url"] }>();
 </script>
 
 <template>
@@ -33,9 +37,13 @@ const linkTextAndHrefMap = links.map((link) => ({
 
       <div id="nav-links" class="space-x-4">
         <template v-for="{ href, text } of linkTextAndHrefMap">
-          <a :href="href" class="capitalize inline-block py-1 px-3">
+          <HeaderLink
+            :url="$props.url"
+            :href="href"
+            class="capitalize inline-block py-1 px-3"
+          >
             {{ text }}
-          </a>
+          </HeaderLink>
         </template>
       </div>
     </div>

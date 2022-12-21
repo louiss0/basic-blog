@@ -61,6 +61,6 @@ img {
 }
 
 p {
-	@apply leading-relaxed max-w-[60vw];
+	@apply leading-relaxed max-w-[60ch];
 	font-size: var(--step--1);
 }
