@@ -1,9 +1,8 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 import { getCollection } from 'astro:content';
+import HMF from '~/layouts/HMF.astro';
 
 // Use Astro.glob() to fetch all posts, and then sort them by date.
 const posts = (await getCollection("blog", (entry)=> entry.data.draft !== true )).sort(
@@ -11,30 +10,9 @@ const posts = (await getCollection("blog", (entry)=> entry.data.draft !== true )
 );
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			ul {
-				list-style-type: none;
-				padding: unset;
-			}
-			ul li {
-				display: flex;
-			}
-			ul li time {
-				flex: 0 0 130px;
-				font-style: italic;
-				color: #595959;
-			}
-			ul li a:visited {
-				color: #8e32dc;
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
+<HMF title={import.meta.env.SITE_TITLE} 
+description={import.meta.env.SITE_DESCRIPTION}>
+	<Header />
 		<main>
 			<section>
 				<ul>
@@ -56,5 +34,7 @@ const posts = (await getCollection("blog", (entry)=> entry.data.draft !== true )
 			</section>
 		</main>
 		<Footer />
-	</body>
-</html>
+	
+</HMF>
+
+
